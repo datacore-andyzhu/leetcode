@@ -11,9 +11,9 @@ from imports import *
 # @lc imports=end
 
 # @lc idea=start
-# 
-# 
-# 
+#
+#
+#
 # @lc idea=end
 
 # @lc group=
@@ -26,20 +26,34 @@ from imports import *
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
+
 class Solution:
     def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        
-        curr = head
-        
-        while curr:
-            if curr.next and curr.val == curr.next.val:
-                curr.next = curr.next.next
-            else:
-                curr = curr.next
-                
-        return head 
-        
+        """Using the single pointer"""
+        # curr = head
+
+        # while curr:
+        #     if curr.next and curr.val == curr.next.val:
+        #         curr.next = curr.next.next
+        #     else:
+        #         curr = curr.next
+
+        # return head
+        """Using two pointers"""
+        slow = head
+        fast = head
+        while fast:
+            if fast.val != slow.val:
+                slow.next = fast
+                slow = slow.next
+            fast = fast.next
+        if slow:
+            slow.next = None
+        return head
+
 # @lc code=end
+
 
 # @lc main=start
 if __name__ == '__main__':
@@ -49,17 +63,17 @@ if __name__ == '__main__':
     print('Exception :')
     print('[1,2]')
     print('Output :')
-    print(str(Solution().deleteDuplicates(listToListNode([1,1,2]))))
+    print(str(Solution().deleteDuplicates(listToListNode([1, 1, 2]))))
     print()
-    
+
     print('Example 2:')
     print('Input : ')
     print('head = [1,1,2,3,3]')
     print('Exception :')
     print('[1,2,3]')
     print('Output :')
-    print(str(Solution().deleteDuplicates(listToListNode([1,1,2,3,3]))))
+    print(str(Solution().deleteDuplicates(listToListNode([1, 1, 2, 3, 3]))))
     print()
-    
+
     pass
 # @lc main=end
