@@ -23,9 +23,21 @@ from imports import *
 # @lc code=start
 class Solution:
     def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
+        # Scan through the list, when reach a number flip its index's 
+        # number to a negative number
+        # so for teh missing number's index position will
+        # be left positive
+        for i in range(len(nums)):
+            index = abs(nums[i]) - 1
+            if nums[index] > 0:
+                nums[index] *= -1
+        results = []
+        for i in range(len(nums)):
+            if nums[i] > 0:
+                results.append(i+1)
+        return results
+
         
-        
-        pass
 # @lc code=end
 
 # @lc main=start

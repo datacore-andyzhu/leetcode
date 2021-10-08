@@ -33,6 +33,7 @@ class Solution:
         #     min_price = min(min_price, price)
         #     max_profit = max(max_profit, price - min_price)
         # return max_profit
+
         # initialize the DP table, initial the # of columns first, then # of rows
         dp = [[None] * 2] * len(prices)
         # print(dp)
@@ -52,7 +53,7 @@ class Solution:
             # shall we not sell the stock at today's price and keep yesterday's profit?
             dp[i][1] = max(dp[i-1][1], prices[i] + dp[i-1][0])
         # return the max profit
-        return dp[i][1]
+        return dp[len(prices)-1][1]
 
 
 # @lc code=end
