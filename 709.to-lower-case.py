@@ -11,9 +11,9 @@ from imports import *
 # @lc imports=end
 
 # @lc idea=start
-# 
-# 
-# 
+#
+#
+#
 # @lc idea=end
 
 # @lc group=
@@ -21,11 +21,15 @@ from imports import *
 # @lc rank=
 
 # @lc code=start
+
+
 class Solution:
     def toLowerCase(self, s: str) -> str:
-        
-        pass
+
+        return s.lower()
+
 # @lc code=end
+
 
 # @lc main=start
 if __name__ == '__main__':
@@ -37,7 +41,7 @@ if __name__ == '__main__':
     print('Output :')
     print(str(Solution().toLowerCase("Hello")))
     print()
-    
+
     print('Example 2:')
     print('Input : ')
     print('s = "here"')
@@ -46,7 +50,7 @@ if __name__ == '__main__':
     print('Output :')
     print(str(Solution().toLowerCase("here")))
     print()
-    
+
     print('Example 3:')
     print('Input : ')
     print('s = "LOVELY"')
@@ -55,6 +59,6 @@ if __name__ == '__main__':
     print('Output :')
     print(str(Solution().toLowerCase("LOVELY")))
     print()
-    
+
     pass
 # @lc main=end
