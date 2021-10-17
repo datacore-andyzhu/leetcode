@@ -38,7 +38,7 @@ class Trie:
 
     def insert(self, word: str) -> None:
         node = self.root
-        found_in_child = False
+        
         for ch in word:
             if node.children.get(ch, 0) == 0:
                 new_node = TrieNode(ch)

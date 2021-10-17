@@ -25,23 +25,37 @@ from imports import *
 
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        result = []
+        # result = []
 
+        # intervals.sort(key=lambda x: x[0])
+        # interval = intervals[0]
+
+        # for item in intervals:
+        #     start = interval[0]
+        #     end = interval[1]
+        #     if end >= item[0]:
+        #         start = min(interval[0], item[0])
+        #         end = max(item[1], interval[1])
+        #         interval = [start, end]
+        #     else:
+        #         result.append(interval)
+        #         interval = item
+        # result.append(interval)
+        # return result
         intervals.sort(key=lambda x: x[0])
-        interval = intervals[0]
-
-        for item in intervals:
-            start = interval[0]
-            end = interval[1]
-            if end >= item[0]:
-                start = min(interval[0], item[0])
-                end = max(item[1], interval[1])
-                interval = [start, end]
+        new_intervals = []
+        if len(intervals) == 1:
+            return intervals
+        for i in range(len(intervals)-1):
+            [a, b] = intervals[i]
+            [c, d] = intervals[i+1]
+            if (b >= c):
+                intervals[i+1] = [min(a, c), max(b, d)]
+                new_intervals.append([min(a, c), max(b, d)])
             else:
-                result.append(interval)
-                interval = item
-        result.append(interval)
-        return result
+                new_intervals.append([a, b])
+                new_intervals.append([c, d])
+        return new_intervals
 
 # @lc code=end
 
