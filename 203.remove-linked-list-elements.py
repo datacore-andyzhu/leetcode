@@ -11,9 +11,9 @@ from imports import *
 # @lc imports=end
 
 # @lc idea=start
-# 
-# 
-# 
+#
+#
+#
 # @lc idea=end
 
 # @lc group=
@@ -26,6 +26,8 @@ from imports import *
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
+
 class Solution:
     def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
         if head is None:
@@ -43,9 +45,10 @@ class Solution:
             else:
                 previous = current
             current = current.next
-        return head                
-        
+        return head
+
 # @lc code=end
+
 
 # @lc main=start
 if __name__ == '__main__':
@@ -55,26 +58,27 @@ if __name__ == '__main__':
     print('Exception :')
     print('[1,2,3,4,5]')
     print('Output :')
-    print(str(Solution().removeElements(listToListNode([1,2,6,3,4,5,6]),6)))
+    print(str(Solution().removeElements(
+        listToListNode([1, 2, 6, 3, 4, 5, 6]), 6)))
     print()
-    
+
     print('Example 2:')
     print('Input : ')
     print('head = [], val = 1')
     print('Exception :')
     print('[]')
     print('Output :')
-    print(str(Solution().removeElements(listToListNode([]),1)))
+    print(str(Solution().removeElements(listToListNode([]), 1)))
     print()
-    
+
     print('Example 3:')
     print('Input : ')
     print('head = [7,7,7,7], val = 7')
     print('Exception :')
     print('[]')
     print('Output :')
-    print(str(Solution().removeElements(listToListNode([7,7,7,7]),7)))
+    print(str(Solution().removeElements(listToListNode([7, 7, 7, 7]), 7)))
     print()
-    
+
     pass
 # @lc main=end
