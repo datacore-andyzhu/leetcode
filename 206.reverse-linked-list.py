@@ -31,31 +31,31 @@ from imports import *
 class Solution:
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
         # """option 1 use recursive method"""
-        # # clear out the edge case: empty linked list
-        # if head is None:
-        #     return None
-        # # start the resursive algorithm, set the base case
-        # if head.next is None:
-        #     return head
-        # last = self.reverseList(head.next)
-        # # after recursive rest if the node, set the head.next element point back 
-        # # to the head element
-        # head.next.next = head
-        # # set head.next to None
-        # head.next = None
-        # return last
+        # clear out the edge case: empty linked list
+        if head is None:
+            return None
+        # start the resursive algorithm, set the base case
+        if head.next is None:
+            return head
+        last = self.reverseList(head.next)
+        # after recursive rest if the node, set the head.next element point back 
+        # to the head element
+        head.next.next = head
+        # set head.next to None
+        head.next = None
+        return last
         """ Option 2: Iterative method """
-        curr = head
-        prev = None
-        while curr:
-            # save the next element to a temp
-            temp = curr.next
-            # reverse the next link
-            curr.next = prev 
-            prev = curr
-            curr = temp
-        # at the end, curr point to the initial linked list last element's next poistion
-        return prev
+        # curr = head
+        # prev = None
+        # while curr:
+        #     # save the next element to a temp
+        #     temp = curr.next
+        #     # reverse the next link
+        #     curr.next = prev 
+        #     prev = curr
+        #     curr = temp
+        # # at the end, curr point to the initial linked list last element's next poistion
+        # return prev
 # @lc code=end
 
 

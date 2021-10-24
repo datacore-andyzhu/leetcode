@@ -30,7 +30,7 @@ class Solution:
         max_len = 0
         while right < len(s):
             c = s[right]
-            right += 1
+            right += 1 
             sliding_window[c] += 1
 
             while sliding_window[c] > 1:

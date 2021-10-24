@@ -11,9 +11,9 @@ from imports import *
 # @lc imports=end
 
 # @lc idea=start
-# 
-# 
-# 
+#
+#
+#
 # @lc idea=end
 
 # @lc group=
@@ -21,19 +21,35 @@ from imports import *
 # @lc rank=
 
 # @lc code=start
-"""
+
 # Definition for a Node.
+
+
 class Node:
-    def __init__(self, val = 0, neighbors = None):
+    def __init__(self, val=0, neighbors=None):
         self.val = val
         self.neighbors = neighbors if neighbors is not None else []
-"""
+
 
 class Solution:
+    def __init__(self):
+        self.visited = {}
+
     def cloneGraph(self, node: 'Node') -> 'Node':
-        
-        pass
+        visited = {}
+        if not node:
+            return None
+        if node in self.visited:
+            return self.visited[node]
+        clone_node = Node(node.val, [])
+
+        self.visited[node] = clone_node
+        if node.neighbors:
+            clone_node.neighbors = [self.cloneGraph(i) for i in node.neighbors]
+
+        return clone_node
 # @lc code=end
+
 
 # @lc main=start
 if __name__ == '__main__':
@@ -43,35 +59,35 @@ if __name__ == '__main__':
     print('Exception :')
     print('[[2,4],[1,3],[2,4],[1,3]]')
     print('Output :')
-    print(str(Solution().__init__(error,error)))
+    print(str(Solution().__init__(error, error)))
     print()
-    
+
     print('Example 2:')
     print('Input : ')
     print('adjList = [[]]')
     print('Exception :')
     print('[[]]')
     print('Output :')
-    print(str(Solution().__init__(error,error)))
+    print(str(Solution().__init__(error, error)))
     print()
-    
+
     print('Example 3:')
     print('Input : ')
     print('adjList = []')
     print('Exception :')
     print('[]')
     print('Output :')
-    print(str(Solution().__init__(error,error)))
+    print(str(Solution().__init__(error, error)))
     print()
-    
+
     print('Example 4:')
     print('Input : ')
     print('adjList = [[2],[1]]')
     print('Exception :')
     print('[[2],[1]]')
     print('Output :')
-    print(str(Solution().__init__(error,error)))
+    print(str(Solution().__init__(error, error)))
     print()
-    
+
     pass
 # @lc main=end

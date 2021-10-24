@@ -8,6 +8,7 @@
 
 # @lc imports=start
 import collections
+from re import X
 from imports import *
 # @lc imports=end
 
@@ -26,42 +27,95 @@ from imports import *
 
 class Solution:
     def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
-        graph = defaultdict(defaultdict)
-        # use DFS to traverse the graph
-        def graph_helper(graph, src, dst, acc_product, visited):
-            visited.add(src)
-            ret = - 1.0
-            neighbors = graph[src]
-            if dst in neighbors:
-                ret = acc_product * neighbors[dst]
-            else:
-                for neighbor, value in neighbors.items():
-                    if neighbor in visited:
-                        continue
-                    ret = graph_helper(graph, neighbor, dst,
-                                       acc_product*value, visited)
-                    if ret != -1.0:
-                        break
-            visited.remove(src)
-            return ret
+        """ Solution 1: Build a graph and using the DFS to traverse the graph """
+        # graph = defaultdict(defaultdict)
+        # # use DFS to traverse the graph
 
-        # building the undirected graph from equation and values
-        # we need to store the both direction link
+        # def graph_helper(graph, src, dst, acc_product, visited):
+        #     visited.add(src)
+        #     ret = - 1.0
+        #     neighbors = graph[src]
+        #     if dst in neighbors:
+        #         ret = acc_product * neighbors[dst]
+        #     else:
+        #         for neighbor, value in neighbors.items():
+        #             if neighbor in visited:
+        #                 continue
+        #             ret = graph_helper(graph, neighbor, dst,
+        #                                acc_product*value, visited)
+        #             if ret != -1.0:
+        #                 break
+        #     # visited.remove(src)
+        #     return ret
+
+        # # building the undirected graph from equation and values
+        # # we need to store the both direction link
+        # for (dividend, divisor), value in zip(equations, values):
+        #     graph[dividend][divisor] = value
+        #     graph[divisor][dividend] = 1.0 / value
+
+        # output = []
+        # for dividend, divisor in queries:
+        #     if dividend not in graph or divisor not in graph:
+        #         ret = -1.0
+        #     elif dividend == divisor:
+        #         ret = 1.0
+        #     else:
+        #         visited = set()
+        #         ret = graph_helper(graph, dividend, divisor, 1, visited)
+        #     output.append(ret)
+        # return output
+
+        """ Solution 2: Use a Union-Find data structure """
+        # here we will be using a union find data structure
+        # but this union find data structure would be customized one since we 
+        # will store the element in a foramt of {'nodeId': (node_group, weight) }
+        uf_root = {} # each element has nodeid: node_group, weight
+        def find(node_id):
+            if node_id not in uf_root:
+                uf_root[node_id] = (node_id, 1)
+                       
+            groupId, node_weight = uf_root[node_id]
+            if groupId != node_id:
+                
+                new_groupId, group_weight = find(groupId)
+                # do not forget to update the weight
+                uf_root[node_id] = (new_groupId, node_weight * group_weight)
+            return uf_root[node_id]
+
+        def union(dividend, divisor, value):
+            dividend_groupId, dividend_weight = find(dividend)
+            divisor_groupId, divisor_weight = find(divisor)
+            if dividend_groupId != divisor_groupId:
+                # merge the two groupd together
+                uf_root[dividend_groupId] = (
+                    divisor_groupId, divisor_weight * value / dividend_weight)
+        
+        # build the union find data structure
         for (dividend, divisor), value in zip(equations, values):
-            graph[dividend][divisor] = value
-            graph[divisor][dividend] = 1.0 / value
-
-        output = []
-        for dividend, divisor in queries:
-            if dividend not in graph and divisor not in graph:
-                ret = -1.0
-            elif dividend == divisor:
-                ret = 1.0
+            union(dividend, divisor, value)
+        
+        results = []
+        # now go through the queries
+        for (dividend, divisor) in queries:
+            # if both dividend and divisor not in union find data structure
+            # we return -1
+            if dividend not in uf_root or divisor not in uf_root:
+                results.append(-1.0)
             else:
-                visited = set()
-                ret = graph_helper(graph, dividend, divisor, 1, visited)
-            output.append(ret)
-        return output
+                dividend_groupId, dividend_weight = find(dividend)
+                divisor_groupId, divisor_weight = find(divisor)
+                # if they belong to the saem group
+                if dividend_groupId == divisor_groupId:
+                    results.append(dividend_weight / divisor_weight)
+                else:
+                    results.append(-1.0)
+        return results
+
+
+
+
+
 
 # @lc code=end
 
