@@ -7,6 +7,7 @@
 # @lc tags=Unknown
 
 # @lc imports=start
+import collections
 from imports import *
 # @lc imports=end
 
@@ -22,18 +23,19 @@ from imports import *
 
 # @lc code=start
 
+
 class UnionFind:
     def __init__(self, n):
         self.root = [i for i in range(n)]
         self.rank = [1 for i in range(n)]
         self.size = n
-    
+
     def find(self, x):
         if x == self.root[x]:
             return x
         self.root[x] = self.find(self.root[x])
         return self.root[x]
-    
+
     def union(self, x, y):
         rootX = self.find(x)
         rootY = self.find(y)
@@ -46,8 +48,10 @@ class UnionFind:
                 self.root[rootY] = rootX
                 self.rank[rootX] += 1
             self.size -= 1
+
     def connected(self, x, y):
         return self.find(x) == self.find(y)
+
 
 class Solution:
     def validPath(self, n: int, edges: List[List[int]], start: int, end: int) -> bool:
@@ -98,12 +102,37 @@ class Solution:
         # visited = [False for _ in range(n)]
         # return dfs(graph, start, visited)
 
-        """ Solution 3: Use Enion Find data structure and test if start anmd end is connected"""
-        uf = UnionFind(n)
-        for edge in edges:
-            uf.union(edge[0], edge[1])
-        
-        return uf.connected(start, end)
+        """ Solution 3: Use Union Find data structure and test if start anmd end is connected"""
+        # uf = UnionFind(n)
+        # for edge in edges:
+        #     uf.union(edge[0], edge[1])
+
+        # return uf.connected(start, end)
+
+        """ Solution 4: Use BFS to determine if there is an path exists from start to end """
+        graph = {}
+
+        def buildGraph(n, edges):
+            _graph = {i: [] for i in range(n)}
+            for edge in edges:
+                _graph[edge[0]].append(edge[1])
+                _graph[edge[1]].append(edge[0])
+            return _graph
+
+        graph = buildGraph(n, edges)
+        traverse_queue = collections.deque([start])
+        visited = set()
+        while traverse_queue:
+            vertex = traverse_queue.popleft()
+            if vertex not in visited:
+                visited.add(vertex)
+                if vertex == end:
+                    return True
+                for neighbor in graph[vertex]:
+                    traverse_queue.append(neighbor)
+        return False
+
+
 # @lc code=end
 # @lc main=start
 if __name__ == '__main__':
