@@ -7,13 +7,14 @@
 # @lc tags=linked-list
 
 # @lc imports=start
+from os import curdir
 from imports import *
 # @lc imports=end
 
 # @lc idea=start
-# 
-# 
-# 
+#
+#
+#
 # @lc idea=end
 
 # @lc group=
@@ -26,11 +27,36 @@ from imports import *
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
+
 class Solution:
     def swapPairs(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        
-        pass
+        """ Solution 1: recursive approach """
+        # if head is None or head.next is None:
+        #     return head
+        # next = head.next
+        # head.next = self.swapPairs(next.next)
+        # next.next = head
+
+        # return next
+
+        """ Solution 2: Iterative apporach """
+        dummyHead = ListNode()
+        dummyHead.next = head
+        prev = dummyHead
+        while prev.next and prev.next.next:
+            curr = prev.next
+            middle = curr.next
+            temp = middle.next
+
+            prev.next = middle
+            middle.next = curr
+            curr.next = temp
+
+            prev = curr
+        return dummyHead.next
 # @lc code=end
+
 
 # @lc main=start
 if __name__ == '__main__':
@@ -40,9 +66,9 @@ if __name__ == '__main__':
     print('Exception :')
     print('[2,1,4,3]')
     print('Output :')
-    print(str(Solution().swapPairs(listToListNode([1,2,3,4]))))
+    print(str(Solution().swapPairs(listToListNode([1, 2, 3, 4]))))
     print()
-    
+
     print('Example 2:')
     print('Input : ')
     print('head = []')
@@ -51,7 +77,7 @@ if __name__ == '__main__':
     print('Output :')
     print(str(Solution().swapPairs(listToListNode([]))))
     print()
-    
+
     print('Example 3:')
     print('Input : ')
     print('head = [1]')
@@ -60,6 +86,6 @@ if __name__ == '__main__':
     print('Output :')
     print(str(Solution().swapPairs(listToListNode([1]))))
     print()
-    
+
     pass
 # @lc main=end
