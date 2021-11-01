@@ -45,7 +45,7 @@ class Solution:
         end = 0
         for color in colors:
             end = start
-            while end < len(nums) and end < len(nums):
+            while end < len(nums) and start < len(nums):
                 if nums[end] == color:
                     nums[start], nums[end] = nums[end], nums[start]
                     start += 1
