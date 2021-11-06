@@ -55,6 +55,18 @@ class Solution:
 
             prev = curr
         return dummyHead.next
+        """ recursive wrote by myself """
+        # if head is None or head.next is None:
+        #     return head
+        # # first grapb head.next pointer
+        # _next = head.next
+        # # current head,next point to the recursive call to head.next.next
+        # head.next = self.swapPairs(_next.next)
+        # # we need to point the _next.next to the old head
+        # _next.next = head      
+        # # make the _next the new head
+        # head = _next
+        # return head
 # @lc code=end
 
 

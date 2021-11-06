@@ -26,13 +26,22 @@ class Solution:
         """
         Do not return anything, modify s in-place instead.
         """
-        left = 0
-        right = len(s) -1 
-        while left < right:
-            s[left], s[right] = s[right], s[left]
-            left += 1
-            right -= 1
-        return s
+        """ Solution 1: iterative """
+        # left = 0
+        # right = len(s) -1 
+        # while left < right:
+        #     s[left], s[right] = s[right], s[left]
+        #     left += 1
+        #     right -= 1
+        # return s
+        """ Solution 2: Recursive """
+        def helper(start, end, str):
+            if not str or start>=end:
+                return 
+            helper(start+1, end-1, str)
+            str[start], str[end] = str[end], str[start]
+            
+        helper(0, len(s)-1, s)
 
 # @lc code=end
 

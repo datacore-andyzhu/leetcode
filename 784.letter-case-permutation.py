@@ -25,19 +25,39 @@ from imports import *
 
 class Solution:
     def letterCasePermutation(self, s: str) -> List[str]:
-        sol = []
-        sl = list(s)
-        def perm(start):
-            if start == len(sl):
-                sol.append("".join(sl))
+        """ Solution 1: recursive """
+        # sol = []
+        # sl = list(s)
+        # def perm(start):
+        #     if start == len(sl):
+        #         sol.append("".join(sl))
+        #         return
+        #     perm(start+1)
+        #     if sl[start].isalpha():
+        #         sl[start] = sl[start].swapcase()
+        #         perm(start+1)
+        #         sl[start] = sl[start].swapcase()
+        # perm(0)
+        # return sol
+
+        """ Solution 2: backtracking """
+        def backtrack(s, idx, path):
+            if idx >= len(s):
+                result.append(path[:])
                 return
-            perm(start+1)
-            if sl[start].isalpha():
-                sl[start] = sl[start].swapcase()
-                perm(start+1)
-                sl[start] = sl[start].swapcase()
-        perm(0)
-        return sol
+
+            ch = s[idx]
+            if ch.isalpha():
+                lower = path + ch.lower()
+                upper = path + ch.upper()
+                backtrack(s, idx+1, path+ch.lower())
+                backtrack(s, idx+1, path+ch.upper())
+            else:
+                backtrack(s, idx+1, path+ch)
+
+        result = []
+        backtrack(s, 0, '')
+        return result
         pass
 # @lc code=end
 

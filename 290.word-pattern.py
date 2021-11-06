@@ -27,6 +27,12 @@ import collections
 class Solution:
     def wordPattern(self, pattern: str, s: str) -> bool:
         # bijection: each element in set A has one-to-one mapping to another element of set B
+        """ 
+        the following code is wrong, because it failed the following scenario:
+        pattern='abba' 
+        s = 'dog dog dog dog'
+        That's why you need two way mapping        
+        """
         # string_list = s.split(' ')
         # if len(set(pattern)) != len(set(string_list)):
         #     return False

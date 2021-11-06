@@ -25,16 +25,35 @@ from imports import *
 
 class Solution:
     def getRow(self, rowIndex: int) -> List[int]:
-        pascalTriangle = []
-        trow = [1]
-        y = [0]
-        if rowIndex == 0:
-            return trow
+        """ Option 1: Iterative """
+        # pascalTriangle = []
+        # trow = [1]
+        # y = [0]
+        # if rowIndex == 0:
+        #     return trow
 
-        for i in range(rowIndex):
-            pascalTriangle.append(trow)
-            trow = [l+r for l, r in zip(trow+y, y+trow)]
-        return trow
+        # for i in range(rowIndex):
+        #     pascalTriangle.append(trow)
+        #     trow = [l+r for l, r in zip(trow+y, y+trow)]
+        # return trow
+
+        """ Option 2: Recursive """
+        def getNum(row, col, memo):
+            if memo[row][col] != None:
+                return memo[row][col]
+            if row == 0 or col == 0 or row==col:
+                return 1
+            
+            res = getNum(row-1, col-1, memo) + getNum(row-1, col, memo)
+            memo[row][col] = res
+            return res
+        
+        result = []
+        memo = [[None for _ in range(rowIndex+1)] for _ in range(rowIndex+1)]
+        for i in range(rowIndex+1):
+            result.append(getNum(rowIndex, i, memo))
+        
+        return result
 
 # @lc code=end
 
