@@ -34,15 +34,15 @@ class Solution:
         Do not return anything, modify head in-place instead.
         """
         """ Solution 1: use iterative method """
-        # The overall solution is to first spli the linked list into two half
+        # The overall solution is to first split the linked list into two half
         # then reverse the second half
         # then merge the tow half
 
         # first identiy the 2nd half of the original list
         # we need to modify the original method a little bit
-        # so the slow pointer will end up to teh node before the split
+        # so the slow pointer will end up to the node before the split
         slow = head
-        fast = head.next  # soecial case in this problem
+        fast = head.next  # special case in this problem
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next

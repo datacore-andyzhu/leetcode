@@ -7,6 +7,7 @@
 # @lc tags=bit-manipulation
 
 # @lc imports=start
+import collections
 from imports import *
 # @lc imports=end
 
@@ -23,7 +24,41 @@ from imports import *
 # @lc code=start
 class Solution:
     def openLock(self, deadends: List[str], target: str) -> int:
-        
+        visited = set()
+        if target in deadends:
+            return -1
+        if '0000' in deadends:
+            return -1
+
+        queue = collections.deque(['0000'])
+        visited.add('0000')
+        steps = 0
+        while queue:
+            size = len(queue)
+            steps += 1
+            for _ in range(size):
+                lock = queue.popleft()
+                for wheel in range(4):
+                    for turn_dir in [-1, 1]:
+                        wheel_num = int(lock[wheel])
+                        if wheel_num == 0 and turn_dir == -1:
+                            new_wheel_num = 9
+                        elif wheel_num == 9 and turn_dir == 1:
+                            new_wheel_num = 0
+                        else:
+                            new_wheel_num = wheel_num + turn_dir
+
+                        new_lock = lock[:wheel] + \
+                            str(new_wheel_num) + lock[wheel+1:]
+                        if new_lock in deadends:
+                            # return -1
+                            continue
+                        if new_lock == target:
+                            return steps
+                        if new_lock not in visited:
+                            queue.append(new_lock)
+                            visited.add(new_lock)
+        return -1
         pass
 # @lc code=end
 
