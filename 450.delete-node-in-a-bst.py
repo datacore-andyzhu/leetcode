@@ -37,62 +37,62 @@ class Solution:
 
     def deleteNode(self, root: Optional[TreeNode], key: int) -> Optional[TreeNode]:
         """ Option 1: use recursive method #1 """
-        # if root is None:
-        #     return None
-        # if root.val == key:
-        #     # situation 1: the node has no child
-        #     if not root.left and not root.right:
-        #         return None
-        #     # siutaiton 2: only has one child
-        #     elif not root.left and root.right:
-        #         return root.right
-        #     elif root.left and not root.right:
-        #         return root.left
-        #     # situation 3: has both children
-        #     # return smallest number in the right child
-        #     elif root.left and root.right:
-        #         minNode = self.getMin(root.right)
-        #         root.val = minNode.val
-        #         # we need to delete the node with min value, not the original key
-        #         root.right = self.deleteNode(root.right, minNode.val)
-        # elif root.val < key:
-        #     root.right = self.deleteNode(root.right, key)
-        # else:
-        #     root.left = self.deleteNode(root.left, key)
-        # return root
+        if root is None:
+            return None
+        if root.val == key:
+            # situation 1: the node has no child
+            if not root.left and not root.right:
+                return None
+            # siutaiton 2: only has one child
+            elif not root.left and root.right:
+                return root.right
+            elif root.left and not root.right:
+                return root.left
+            # situation 3: has both children
+            # return smallest number in the right child
+            elif root.left and root.right:
+                minNode = self.getMin(root.right)
+                root.val = minNode.val
+                # we need to delete the node with min value, not the original key
+                root.right = self.deleteNode(root.right, minNode.val)
+        elif root.val < key:
+            root.right = self.deleteNode(root.right, key)
+        else:
+            root.left = self.deleteNode(root.left, key)
+        return root
 
         """ Option 2: use resursive method without calling a help function """
         # https://leetcode-cn.com/problems/delete-node-in-a-bst/solution/miao-dong-jiu-wan-shi-liao-by-terry2020-tc0o/
-        # if root is None:
-        #     return None
-        # if root.val == key:
-        #     # situation 1: the node has no child
-        #     if not root.left and not root.right:
-        #         return None
-        #     # siutaiton 2: only has one child
-        #     elif not root.left and root.right:
-        #         return root.right
-        #     elif root.left and not root.right:
-        #         return root.left
-        #     # situation 3: has both children
+        if root is None:
+            return None
+        if root.val == key:
+            # situation 1: the node has no child
+            if not root.left and not root.right:
+                return None
+            # siutaiton 2: only has one child
+            elif not root.left and root.right:
+                return root.right
+            elif root.left and not root.right:
+                return root.left
+            # situation 3: has both children
 
-        #     elif root.left and root.right:
-        #         # fina the smallest number in right child
-        #         tempNode = root.right
-        #         while tempNode.left:
-        #             tempNode = tempNode.left
-        #         # assign the left child of root to this tempnode
-        #         # 将欲删除节点的左子树成为其右子树的最左节点的左子树
-        #         tempNode.left = root.left
-        #         # 欲删除节点的右子顶替其位置，节点被删除
-        #         #
-        #         root = root.right
+            elif root.left and root.right:
+                # find the smallest number in right child
+                tempNode = root.right
+                while tempNode.left:
+                    tempNode = tempNode.left
+                # assign the left child of root to this tempnode
+                # 将欲删除节点的左子树成为其右子树的最左节点的左子树
+                tempNode.left = root.left
+                # 欲删除节点的右子顶替其位置，节点被删除
+                #
+                root = root.right
 
-        # elif root.val < key:
-        #     root.right = self.deleteNode(root.right, key)
-        # else:
-        #     root.left = self.deleteNode(root.left, key)
-        # return root
+        elif root.val < key:
+            root.right = self.deleteNode(root.right, key)
+        else:
+            root.left = self.deleteNode(root.left, key)
+        return root
 
         """ Option 3: use iterative method """
 
@@ -114,8 +114,7 @@ class Solution:
         # if key has left or right chold
         # Check if the node to be
         # deleted has atmost one child
-        if curr.left == None or\
-                curr.right == None:
+        if curr.left == None or curr.right == None:
 
             # newCurr will replace
             # the node to be deleted.
