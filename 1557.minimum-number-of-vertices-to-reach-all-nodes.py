@@ -33,7 +33,7 @@ class Solution:
             out_degree[_from] += 1
             in_degree[_to] += 1
         for i in range(n):
-            if in_degree[i] == 0 and out_degree != 0:
+            if in_degree[i] == 0 and out_degree[i] != 0:
                 result.append(i)
         return result
         

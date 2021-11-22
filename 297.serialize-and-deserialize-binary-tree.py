@@ -51,8 +51,9 @@ class Codec:
                 arr.append(str(node.val))
                 bfs.append(node.left)
                 bfs.append(node.right)
-        while arr[-1] is None:
-            arr.pop()
+        print(arr)
+        # while arr[-1] is None:
+        #     arr.pop()
         return ','.join(arr)
 
     def deserialize(self, data):
@@ -73,8 +74,7 @@ class Codec:
         # to iterate through half of the tree
         n = len(arr)//2
         
-        for i in range(n):
-            
+        for i in range(n):            
   
             node_arr[i].left = node_arr[i*2+1]
             node_arr[i].right = node_arr[i*2+2]

@@ -37,7 +37,7 @@ class Solution:
                 dfs(graph, neighbor, dst, visited, path)
                 path.pop()
             # do not forget to reset the visited hashmap
-            # becasue this is finding all tehe path
+            # becasue this is finding all the path
             visited[src] = False
         results = []
         n = len(graph)
