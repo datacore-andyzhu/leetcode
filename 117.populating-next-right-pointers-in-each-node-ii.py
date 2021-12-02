@@ -47,14 +47,15 @@ class Solution:
                 for _ in range(level_size):
                     node = queue.popleft()
                     tmp.append(node)
-                    i = 0
-                    while i < len(tmp) - 1:
-                        tmp[i].next = tmp[i+1]
-                        i += 1
+
                     if node.left:
                         queue.append(node.left)
                     if node.right:
                         queue.append(node.right)
+                i = 0
+                while i < len(tmp) - 1:
+                    tmp[i].next = tmp[i+1]
+                    i += 1
             return root
         if root is None:
             return None

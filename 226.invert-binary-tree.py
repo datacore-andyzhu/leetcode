@@ -33,30 +33,34 @@ from imports import *
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         """ Option 1: use recursive method """
-        if not root:
-            return None
-        
-        root.left, root.right = root.right, root.left
-        self.invertTree(root.left)
-        self.invertTree(root.right)
-
-        return root
-
-        """ Option 2: use the level traversal (BFS) method """
         # if not root:
         #     return None
-        # bfs = collections.deque([root])
+        
+        # # root.left, root.right = root.right, root.left
+        # self.invertTree(root.left)
+        # self.invertTree(root.right)
+        # # if not root:
+        # #     return None
 
-        # while bfs:
-        #     level_size = len(bfs)
-        #     for _ in range(level_size):
-        #         node = bfs.popleft()
-        #         node.left, node.right = node.right, node.left
-        #         if node.right:
-        #             bfs.append(node.right)
-        #         if node.left:
-        #             bfs.append(node.left)
+        # root.left, root.right = root.right, root.left
+
         # return root
+
+        """ Option 2: use the level traversal (BFS) method """
+        if not root:
+            return None
+        bfs = collections.deque([root])
+
+        while bfs:
+            level_size = len(bfs)
+            for _ in range(level_size):
+                node = bfs.popleft()
+                node.left, node.right = node.right, node.left
+                if node.right:
+                    bfs.append(node.right)
+                if node.left:
+                    bfs.append(node.left)
+        return root
 
 # @lc code=end
 
