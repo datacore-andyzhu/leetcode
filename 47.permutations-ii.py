@@ -26,22 +26,44 @@ from imports import *
 
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
-        nums_dict = collections.Counter(nums)
-        results = []
+        """ Solution 1 """
+        # nums_dict = collections.Counter(nums)
+        # results = []
 
-        def backtrack(path, nums_dict):
+        # def backtrack(path, nums_dict):
+        #     if len(path) == len(nums):
+        #         results.append(path[:])
+        #         return
+        #     for num in nums_dict:
+        #         if nums_dict[num] > 0:
+        #             path.append(num)
+        #             nums_dict[num] -= 1
+        #             backtrack(path, nums_dict)
+        #             path.pop()
+        #             nums_dict[num] += 1
+        # backtrack([], nums_dict)
+        # return results
+
+        """ Solution 2 """
+        def backtrack(nums, used, path):
             if len(path) == len(nums):
                 results.append(path[:])
                 return
-            for num in nums_dict:
-                if nums_dict[num] > 0:
-                    path.append(num)
-                    nums_dict[num] -= 1
-                    backtrack(path, nums_dict)
+            for i in range(len(nums)):
+                if i > 0 and nums[i] == nums[i-1] and used[i-1] == False:
+                    continue
+                if used[i] == False:
+                    used[i] = True
+                    path.append(nums[i])
+                    backtrack(nums, used, path)
                     path.pop()
-                    nums_dict[num] += 1
-        backtrack([], nums_dict)
+                    used[i] = False
+        results = []
+        used = [False for _ in range(len(nums))]
+        nums.sort()
+        backtrack(nums, used, [])
         return results
+
         pass
 # @lc code=end
 

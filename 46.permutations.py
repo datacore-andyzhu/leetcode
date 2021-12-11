@@ -25,22 +25,39 @@ from imports import *
 
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        def backtrack(nums, path):
+        """ Solution 1 """
+        # def backtrack(nums, path):
+        #     if len(path) == len(nums):
+        #         result.append(path[:])
+        #         return
+
+        #     for num in nums:
+        #         if num in path:
+        #             continue
+        #         path.append(num)
+        #         backtrack(nums, path)
+        #         path.pop()
+
+        # result = []
+        # backtrack(nums, [])
+        # return result
+        """ Solution 2 """
+        def backtrack(nums, used, path):
             if len(path) == len(nums):
-                result.append(path[:])
-                return
-
-            for num in nums:
-                if num in path:
+                results.append(path[:])
+            for i in range(len(nums)):
+                if used[i] == True:
                     continue
-                path.append(num)
-                backtrack(nums, path)
+                used[i] = True
+                path.append(nums[i])
+                backtrack(nums, used, path)
                 path.pop()
-
-        result = []
-        backtrack(nums, [])
-        return result
-
+                used[i] = False
+        results = []
+        # use list to indicate which index's number has been used
+        used = [False for _ in range(len(nums))]
+        backtrack(nums, used, [])
+        return results
 # @lc code=end
 
 
