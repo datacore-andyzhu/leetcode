@@ -25,20 +25,36 @@ from imports import *
 
 class Solution:
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
-        nums.sort()
-        n = len(nums)
-        results = []
+        """ Solution 1 """
+        # nums.sort()
+        # n = len(nums)
+        # results = []
 
-        def backtrack(start, k, path):
-            if len(path) == k and path not in results:
-                results.append(path[:])
-                return
+        # def backtrack(start, k, path):
+        #     if len(path) == k and path not in results:
+        #         results.append(path[:])
+        #         return
+        #     for i in range(start, n):
+        #         path.append(nums[i])
+        #         backtrack(i+1, k, path)
+        #         path.pop()
+        # for k in range(n+1):
+        #     backtrack(0, k, [])
+        # return results
+        """ Solution 2 """
+        def backtrack(nums, start, path):
+            results.append(path.copy())
+            n = len(nums)
+            if start >= n:
+                return 
             for i in range(start, n):
-                path.append(nums[i])
-                backtrack(i+1, k, path)
+                if i > start and nums[i] == nums[i-1]:
+                    continue
+                backtrack(nums, i+1, path)
                 path.pop()
-        for k in range(n+1):
-            backtrack(0, k, [])
+        results = []
+        nums.sort()
+        backtrack(nums, 0, [])
         return results
         pass
 # @lc code=end

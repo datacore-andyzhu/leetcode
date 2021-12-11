@@ -25,19 +25,33 @@ from imports import *
 
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-        n = len(nums)
-        results = []
+        """ Solution 1 """
+        # n = len(nums)
+        # results = []
 
-        def backtrack(start, k, path):
-            if len(path) == k:
-                results.append(path[:])
+        # def backtrack(start, k, path):
+        #     if len(path) == k:
+        #         results.append(path[:])
+        #         return
+        #     for i in range(start, n):
+        #         path.append(nums[i])
+        #         backtrack(i+1, k, path)
+        #         path.pop()
+        # for k in range(n+1):
+        #     backtrack(0, k, [])
+        # return results
+        """ Solution 2 """
+        def backtrack(nums, start, path):
+            results.append(path.copy())
+            n = len(nums)
+            if start >= n:
                 return
             for i in range(start, n):
                 path.append(nums[i])
-                backtrack(i+1, k, path)
+                backtrack(nums, i+1, path)
                 path.pop()
-        for k in range(n+1):
-            backtrack(0, k, [])
+        results = []
+        backtrack(nums, 0, [])
         return results
 
         pass
