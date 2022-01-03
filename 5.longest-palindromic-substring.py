@@ -24,29 +24,49 @@ from imports import *
 
 
 class Solution:
-    def isPalindrome(self, s, left, right):
-        while left >= 0 and right < len(s) and s[left] == s[right]:
-            left -= 1
-            right += 1
-        return s[left+1:right]
+    """ Solution 1 """
+    # def isPalindrome(self, s, left, right):
+    #     while left >= 0 and right < len(s) and s[left] == s[right]:
+    #         left -= 1
+    #         right += 1
+    #     return s[left+1:right]
+
+    # def longestPalindrome(self, s: str) -> str:
+    #     # this function starts in the middle of string
+    #     # going left and right and verify left char and right char are
+    #     # equal
+
+    #     n = len(s)
+    #     result = ''
+    #     for i in range(n):
+    #         # because we do not know starting in position i
+    #         # as middle of the string, the string length is odd or even
+
+    #         s1 = self.isPalindrome(s, i, i)
+    #         s2 = self.isPalindrome(s, i, i+1)
+    #         result = s1 if len(s1) > len(result) else result
+    #         result = s2 if len(s2) > len(result) else result
+    #     return result
+    """ Solution 2: DP """
 
     def longestPalindrome(self, s: str) -> str:
-        # this function starts in the middle of string
-        # going left and right and verify left char and right char are
-        # equal
+        dp = [[False for _ in range(len(s))] for _ in range(len(s))]
+        maxLength = 0
+        left = 0
+        right = 0
+        for i in range(len(s)-1, -1, -1):
+            for j in range(i, len(s)):
+                if s[i] == s[j]:
+                    if j - i <= 1:
+                        dp[i][j] = True
+                    elif dp[i+1][j-1] == True:
+                        dp[i][j] = True
+                if dp[i][j] and j-i+1 > maxLength:
+                    maxLength = j-i+1
+                    left = i
+                    right = j
 
-        n = len(s)
-        result = ''
-        for i in range(n):
-            # because we do not know starting in position i
-            # as middle of the string, the string length is odd or even
-
-            s1 = self.isPalindrome(s, i, i)
-            s2 = self.isPalindrome(s, i, i+1)
-            result = s1 if len(s1) > len(result) else result
-            result = s2 if len(s2) > len(result) else result
-        return result
-
+        return s[left:right+1]
 
 # @lc code=end
 

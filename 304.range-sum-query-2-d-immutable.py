@@ -27,13 +27,22 @@ class NumMatrix:
 
     def __init__(self, matrix: List[List[int]]):
 
-        self.matrixSum = [
-            [0 for _ in range(len(matrix[0])+1)] for _ in range(len(matrix)+1)]
-        for i in range(len(matrix)):
-            rowsum = 0
-            for j in range(len(matrix[0])):
-                rowsum = rowsum + matrix[i][j]
-                self.matrixSum[i+1][j+1] = self.matrixSum[i][j+1] + rowsum
+        # self.matrixSum = [
+        #     [0 for _ in range(len(matrix[0])+1)] for _ in range(len(matrix)+1)]
+        # for i in range(len(matrix)):
+        #     rowsum = 0
+        #     for j in range(len(matrix[0])):
+        #         rowsum = rowsum + matrix[i][j]
+        #         self.matrixSum[i+1][j+1] = self.matrixSum[i][j+1] + rowsum
+        m = len(matrix)
+        n = len(matrix[0])
+        if m == 0 or n == 0:
+            return
+        self.matrix = [[0 for _ in range(n+1)] for _ in range(m+1)]
+        
+        for i in range(m):
+            for j in range(n):
+                self.matrix[i+1][j+1] = self.matrix[i+1][j] + self.matrix[i][j+1] + matrix[i][j] - self.matrix[i][j]
 
     def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -> int:
         return self.matrixSum[row2+1][col2+1] - self.matrixSum[row1][col2+1] \
