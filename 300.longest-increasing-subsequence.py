@@ -53,20 +53,33 @@ class Solution:
         that is greater than or equal to num. Replace that element with num.
         Return the length of sub.
         """
-        sub = []
-        for num in nums:
-            i = bisect_left(sub, num)
+        # sub = []
+        # for num in nums:
+        #     i = bisect_left(sub, num)
 
-            # If num is greater than any element in sub
-            if i == len(sub):
-                sub.append(num)
+        #     # If num is greater than any element in sub
+        #     if i == len(sub):
+        #         sub.append(num)
 
-            # Otherwise, replace the first element in sub greater than or equal to num
-            else:
-                sub[i] = num
+        #     # Otherwise, replace the first element in sub greater than or equal to num
+        #     else:
+        #         sub[i] = num
 
-        return len(sub)
-        pass
+        # return len(sub)
+        """ Solution 3: DP """
+        n = len(nums)
+        if n <= 1:
+            return n
+        # dp[i] represent up to i the longest increase sub sequence
+        dp = [1 for _ in range(n)]
+        result = 0
+        for i in range(1, n):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j]+1)
+            if dp[i] > result:
+                result = dp[i]
+        return result
 # @lc code=end
 
 
