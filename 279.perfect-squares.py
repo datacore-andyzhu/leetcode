@@ -27,22 +27,33 @@ from imports import *
 
 class Solution:
     def numSquares(self, n: int) -> int:
-        squares = [i**2 for i in range(int(math.sqrt(n)+1))]
-        ans = 1
-        queue = collections.deque([n])
+        """ Solution 1 """
+        # squares = [i**2 for i in range(int(math.sqrt(n)+1))]
+        # ans = 1
+        # queue = collections.deque([n])
 
-        while queue:
-            size = len(queue)
-            for _ in range(size):
-                num = queue.popleft()
-                for s in squares:
-                    if s == num:
-                        return ans
-                    if s > num:
-                        break
-                    queue.append(num-s)
-            ans += 1
-        return ans
+        # while queue:
+        #     size = len(queue)
+        #     for _ in range(size):
+        #         num = queue.popleft()
+        #         for s in squares:
+        #             if s == num:
+        #                 return ans
+        #             if s > num:
+        #                 break
+        #             queue.append(num-s)
+        #     ans += 1
+        # return ans
+        """ Solution 2: DP """
+        dp = [i for i in range(n+1)]
+
+        for i in range(1, n):
+            if i*i > n:
+                break
+            num = i * i
+            for j in range(num, n+1):
+                dp[j] = min(dp[j-num]+1, dp[j])
+        return dp[n]
         pass
 # @lc code=end
 
