@@ -32,59 +32,53 @@ import queue
 #         self.next = next
 
 
+import queue
+
+
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        # myHeap = [x for x in lists]
-        # heapq.heapify(myHeap)
-        # n = len(lists)
-        # for _idx, _list in enumerate(lists):
-        #     heapq.heappush(myHeap, {'arrayIndex': _idx,
-        #                    'elementIndex': 0, 'value': -1 * _list.val})
-        # result = []
+        """ Solution 1: Heap """
+        # setattr(ListNode, "__lt__", lambda self, other: self.val <= other.val)
+        # heap = []
+        # head = ListNode()
+        # curr = head
+        # for i in range(len(lists)):
+        #     if lists[i]:
+        #         heap.append((lists[i].val, i))
+        # heapq.heapify(heap)
 
-        # while myHeap[0].value != float('inf'):
-        #     top = heapq.heappop(myHeap)
-        #     result.append(top.value)
-        #     top.elementIndex += 1
-        #     if top.elementIndex >= len(lists[top.arrayIndex]):
-        #         top.value = float('inf')
-        #     else:
-        #         top.value = lists[top.arrayIndex][top.elementIndex]
-
-        #     heapq.heapify(myHeap)
-
-        # return result
-        # create a min-heap using the first node of each list
-        pq = queue.PriorityQueue()
-        for x in lists:
-            pq.put(x)
-
-        # take two pointers, head and tail, where the head points to the first node
-        # of the output list and tail points to its last node
-        head = last = None
-
-        # run till min-heap is empty
-        while pq:
-
-            # extract the minimum node from the min-heap
-            min = pq.get()
-
-            # add the minimum node to the output list
-            if head is None:
-                head = min
-                last = min
+        # while heap:
+        #     a, b = heapq.heappop(heap)
+        #     curr.next = ListNode(a)
+        #     curr = curr.next
+        #     lists[b] = lists[b].next
+        #     if lists[b]:
+        #         heapq.heappush(heap, (lists[b].val, b))
+        # return head.next
+        """ Solution 2: Merge """
+        def merge2Lists(list1, list2):
+            head = curr = ListNode(0)
+            while list1 and list2:
+                if list1.val <= list2.val:
+                    curr.next = list1
+                    list1 = list1.next
+                else:
+                    curr.next = list2
+                    list2 = list2.next
+                curr = curr.next
+            if not list1:
+                curr.next = list2
             else:
-                last.next = min
-                last = min
-
-            # take the next node from the "same" list and insert it into the min-heap
-            if min.next:
-                pq.put(min.next)
-
-        # return head node of the merged list
-        return head
-
-
+                curr.next = list1
+            return head.next
+        amount = len(lists)
+        interval = 1
+        while interval < amount:
+            for i in range(0, amount-interval, interval*2):
+                lists[i] = merge2Lists(lists[i], lists[i+interval])
+            interval *= 2
+        return lists[0] if amount > 0 else None
+                
 # @lc code=end
 # @lc main=start
 if __name__ == '__main__':

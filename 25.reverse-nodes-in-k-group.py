@@ -31,6 +31,7 @@ from imports import *
 class Solution:
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         """https://leetcode-solution-leetcode-pp.gitbook.io/leetcode-solution/hard/25.reverse-nodes-in-k-groups"""
+        """ Solution 1: """
         def reverse(head, tail, terminate):
             curr = head
             pre = None
@@ -57,6 +58,31 @@ class Solution:
             pre = tail
             head = next
         return dummyHead.next
+        """ Solution: Recursive """
+        # reverse between nodeA and nodeB
+        def reverse(nodeA, nodeB):
+            pre = None
+            curr = nodeA
+            nxt = nodeA
+            while curr != nodeB:
+                nxt = curr.next
+                curr.next = pre
+                pre = curr
+                curr = nxt
+            return pre
+        # main logic
+        if head is None:
+            return None
+        a = b = head
+        # determine reverse range 
+        for i in range(k):
+            if b is None:
+                return head
+            b = b.next
+
+        newhead = reverse(a, b)
+        a.next = self.reverseKGroup(b, k)
+        return newhead
 # @lc code=end
 
 
