@@ -8,6 +8,7 @@
 
 # @lc imports=start
 from imports import *
+import heapq
 # @lc imports=end
 
 # @lc idea=start
