@@ -43,7 +43,7 @@ class Solution:
         # dp[3] -> 'o'
         # dp[4] -> 'u'
         dp = (1, 1, 1, 1, 1)
-        for _ in range(n - 1):
+        for _ in range(2, n+1):
             dp = ((dp[1] + dp[2] + dp[4]) % 1000000007, (dp[0] + dp[2]) % 1000000007,
                   (dp[1] + dp[3]) % 1000000007, dp[2], (dp[2] + dp[3]) % 1000000007)
         return sum(dp) % 1000000007
