@@ -31,7 +31,10 @@ class Solution:
 
     We then run a loop until there is only two nodes left in the graph.
 
-    At each iteration, we remove the current leaf nodes from the queue. While removing the nodes, we also remove the edges that are linked to the nodes. As a consequence, some of the non-leaf nodes would become leaf nodes. And these are the nodes that would be trimmed out in the next iteration.
+    At each iteration, we remove the current leaf nodes from the queue. 
+    While removing the nodes, we also remove the edges that are linked to the nodes. 
+    As a consequence, some of the non-leaf nodes would become leaf nodes. 
+    And these are the nodes that would be trimmed out in the next iteration.
 
     The iteration terminates when there are no more than two nodes left in the graph, which are the desired centroids nodes.
     """

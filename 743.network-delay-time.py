@@ -7,6 +7,7 @@
 # @lc tags=tree
 
 # @lc imports=start
+from tkinter import W
 from imports import *
 import collections
 import heapq
@@ -54,21 +55,50 @@ class Solution:
         # else:
         #     return max(dist)
         """ Solution 2: Dijkstra without init the distance table """
-        graph = collections.defaultdict(list)
-        for src, dst, weight in times:
-            graph[src].append((dst, weight))
-        pq = []
-        dist = {}
-        heapq.heappush(pq, (0, k))
-        while pq:
-            weight, node = heapq.heappop(pq)
-            if node in dist:
-                continue
-            dist[node] = weight
-            for next, cost in graph[node]:
-                if next not in dist:
-                    heapq.heappush(pq, (cost+weight, next))
-        return max(dist.values()) if len(dist) == n else -1
+        # graph = collections.defaultdict(list)
+        # for src, dst, weight in times:
+        #     graph[src].append((dst, weight))
+        # pq = []
+        # dist = {}
+        # heapq.heappush(pq, (0, k))
+        # while pq:
+        #     weight, node = heapq.heappop(pq)
+        #     if node in dist:
+        #         continue
+        #     dist[node] = weight
+        #     for next, cost in graph[node]:
+        #         if next not in dist:
+        #             heapq.heappush(pq, (cost+weight, next))
+        # return max(dist.values()) if len(dist) == n else -1
+        """ Solution 3: Floyd Marchsall """
+        # adjMatrix = [[0 for _ in range(n+1) ] for _ in range(n+1)]
+        # for i in range(1, n+1):
+        #     for j in range(1, n+1):
+        #         adjMatrix[i][j] = adjMatrix[j][i] = float('inf') if i != j else 0
+        # for src, dst, weight in times:
+        #     adjMatrix[src][dst] = weight
+        # # floyd algo, 3 level of loop, DP
+        # for p in range(1, n+1):
+        #     for i in range(1, n+1):
+        #         for j in range(1, n+1):
+        #             adjMatrix[i][j] = min(adjMatrix[i][j], adjMatrix[i][p]+adjMatrix[p][j])
+        # ans = 0
+        # for i in range(1, n+1):
+        #     ans = max(ans, adjMatrix[k][i])
+        
+        # return ans if ans < float('inf') else -1
+
+        """ Solution 4: Bellman Ford """
+        distance = {i: float('inf') for i in range(1, n+1)}        
+        distance[k] = 0
+
+        for i in range(n):
+            for u, v, w in times:
+                if distance[u] != float('inf') and distance[u] + w < distance[v]:
+                    distance[v] = distance[u] + w
+        mx = max(distance.values())
+        return mx if mx < float('inf') else -1 
+
 # @lc code=end
 
 

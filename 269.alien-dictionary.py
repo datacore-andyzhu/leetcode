@@ -11,7 +11,7 @@ def alientDict(wordList):
                     in_degree[d] += 1
                 break
         else:
-            if len(firstword) < len(secondword):
+            if len(secondword) < len(firstword):
                 return ''
     output = []
     queue = deque([c for c in in_degree if in_degree[c] == 0])
