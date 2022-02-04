@@ -21,9 +21,56 @@ from imports import *
 # @lc rank=
 
 # @lc code=start
+
+
+class UnionFind:
+    def __init__(self, n):
+        self.root = [i for i in range(n)]
+        self.rank = [1 for i in range(n)]
+        self.size = n
+
+    def find(self, x):
+        if x == self.root[x]:
+            return x
+        self.root[x] = self.find(self.root[x])
+        return self.root[x]
+
+    def union(self, x, y):
+        rootX = self.find(x)
+        rootY = self.find(y)
+        if rootX != rootY:
+            if self.rank[rootX] > self.rank[rootY]:
+                self.root[rootY] = rootX
+            elif self.rank[rootY] > self.rank[rootX]:
+                self.root[rootX] = rootY
+            else:
+                self.root[rootY] = rootX
+                self.rank[rootX] += 1
+
+    def connected(self, x, y):
+        return self.find(x) == self.find(y)
 class Solution:
     def swimInWater(self, grid: List[List[int]]) -> int:
+        n = len(grid)
+        if n == 1:
+            return grid[0][0]
+        edges = list()
+        for i in range(n):
+            for j in range(n):
+                idx = i*n+j
+                if i > 0:
+                    edges.append((idx-n, idx, max(grid[i][j], grid[i-1][j])))
+                if j > 0:
+                    edges.append((idx-1, idx, max(grid[i][j], grid[i][j-1])))
         
+        edges.sort(key=lambda x: x[2])
+        uf = UnionFind(n*n)
+        ans = -1
+        for x, y, v in edges:
+            uf.union(x, y)
+            ans = max(ans, v)
+            if uf.connected(0, n*n-1):
+                return ans
         pass
 # @lc code=end
 
