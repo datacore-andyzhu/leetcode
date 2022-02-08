@@ -29,6 +29,8 @@ class Solution:
             return -1
         if '0000' in deadends:
             return -1
+        if '0000' == target:
+            return 0
 
         queue = collections.deque(['0000'])
         visited.add('0000')

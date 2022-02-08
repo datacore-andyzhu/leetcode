@@ -41,28 +41,32 @@ class Solution:
             return graph
         if endWord not in wordList:
             return []
+        if beginWord == endWord:
+            return [beginWord]
+
+        visited = set()
         wordset = set(wordList)
         wordset.add(beginWord)
         graph = creatWordGraph(wordset)
-        visited = set()
-        result = []
+
+        results = []
         queue = collections.deque([[beginWord]])
         visited.add(beginWord)
         while queue:
             level_size = len(queue)
+            aux_set = set()
             for _ in range(level_size):
                 curr_path = queue.popleft()
-                last_word = curr_path[-1]
-                visited.add(last_word)
-                if last_word == endWord:
-                    result.append(curr_path[:])
-                for neighbor in graph[last_word]:
-                    if neighbor not in visited:
-                        queue.append(curr_path[:] + [neighbor])
-        if result:
-            return result
-        else:
-            return []
+                curr_word = curr_path[-1]
+
+                if curr_word == endWord:
+                    results.append(curr_path[:])
+                for nextword in graph[curr_word]:
+                    if nextword not in visited:
+                        aux_set.add(nextword)
+                        queue.append(curr_path[:] + [nextword])
+            visited.update(aux_set)
+        return results
         pass
 # @lc code=end
 
