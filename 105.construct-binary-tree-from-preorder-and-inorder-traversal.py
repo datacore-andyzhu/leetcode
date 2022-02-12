@@ -49,6 +49,21 @@ class Solution:
 
             return root
         return build(preorder, 0, len(preorder)-1, inorder, 0, len(inorder)-1)
+        """ Solution 2 """
+        def buildFromInorder(left, right):
+            if left > right:
+                return None
+            rootVal = preorder.popleft()
+            root = TreeNode(rootVal)
+            inorder_idx = inorder_map[rootVal]
+            # due to preorder sequence of put the node
+            # we need to start from root.left
+            root.left = buildFromInorder(left, inorder_idx-1)
+            root.right = buildFromInorder(inorder_idx+1, right)
+            return root
+        preorder = deque(preorder)
+        inorder_map = {value: index for index, value in enumerate(inorder)}
+        return buildFromInorder(0, len(preorder)-1)
 # @lc code=end
 
 

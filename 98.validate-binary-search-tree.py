@@ -31,8 +31,9 @@ from imports import *
 
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-
+        """ Solution 1 """
         def recursive(root, minNode, maxNode):
+        
             if root is None:
                 return True
             if minNode is not None and root.val <= minNode.val:
@@ -42,6 +43,39 @@ class Solution:
             return recursive(root.left, minNode, root) \
                 and recursive(root.right, root, maxNode)
         return recursive(root, None, None)
+        """ Solution 2 """
+        curr_max = float('-inf')
+
+        def _isvalid(root):
+            nonlocal curr_max
+            if not root:
+                return True
+            is_left_valid = _isvalid(root.left)
+            if curr_max < root.val:
+                curr_max = root.val
+            else:
+                return False
+            is_right_valid = _isvalid(root.right)
+            return is_left_valid and is_right_valid
+        return _isvalid(root)
+
+        
+        """ Solution 3 """
+        stack = []
+        previous = float('-inf')
+
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+
+            if root.val <= previous:
+                return False
+            previous = root.val
+            root = root.right
+
+        return True
 # @lc code=end
 
 

@@ -31,6 +31,7 @@ from imports import *
 
 class Solution:
     def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+        """ Solution 1 """
         def build(inorder, inStart, inEnd, postorder, postStart, postEnd):
             if inStart > inEnd:
                 return None
@@ -48,7 +49,25 @@ class Solution:
                                inEnd, postorder, postStart+left_size, postEnd-1)
             return root
         return build(inorder, 0, len(inorder)-1, postorder, 0, len(postorder)-1)
+        """ Solution 2 """
+        def build_from_inorder(left, right):
 
+            if left > right:
+                return None
+            rootval = postorder.pop()
+
+            root = TreeNode(rootval)
+
+            inorder_index = inorder_map[rootval]
+            # we have to start from right child, look at the post order
+            # after pop the root, the new root is for right child
+            root.right = build_from_inorder(inorder_index+1, right)
+            root.left = build_from_inorder(left, inorder_index-1)
+
+            return root
+
+        inorder_map = {value: index for index, value in enumerate(inorder)}
+        return build_from_inorder(0, len(inorder)-1)
 # @lc code=end
 
 

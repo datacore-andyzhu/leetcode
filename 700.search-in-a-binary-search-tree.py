@@ -7,6 +7,7 @@
 # @lc tags=Unknown
 
 # @lc imports=start
+from urllib.parse import _NetlocResultMixinStr
 from imports import *
 # @lc imports=end
 
@@ -31,6 +32,7 @@ from imports import *
 
 class Solution:
     def searchBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+        """ Solution 1"""
         if root is None:
             return None
         if root.val == val:
@@ -39,7 +41,17 @@ class Solution:
             return self.searchBST(root.right, val)
         else:
             return self.searchBST(root.left, val)
-
+        """ Solution 2 """
+        if not root:
+            return None
+        while root:
+            if root.val < val:
+                root = root.right
+            elif root.val > val:
+                root = root.left
+            else:
+                return root
+        return None
 # @lc code=end
 
 

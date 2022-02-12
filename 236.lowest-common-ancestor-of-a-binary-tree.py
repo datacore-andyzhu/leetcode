@@ -7,6 +7,7 @@
 # @lc tags=tree
 
 # @lc imports=start
+from turtle import left, right
 from imports import *
 # @lc imports=end
 
@@ -31,6 +32,7 @@ from imports import *
 
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        """ Solution 1 """
         stack = [root]
         parent = {root: None}
 
@@ -58,8 +60,20 @@ class Solution:
         while q not in ancestor:
             q = parent[q]
         return q
-
-
+        
+        """ Solution 2 """
+        if not root or root == p or root == q:
+            return root
+        left = self.lowestCommonAncestor(root.left, p, q)
+        right = self.lowestCommonAncestor(root.right, p, q)
+        if left and right:
+            return root
+        elif not left and right:
+            return right
+        elif left and not right:
+            return left
+        else:
+            return None
 # @lc code=end
 
 # @lc main=start
