@@ -7,6 +7,7 @@
 # @lc tags=dynamic-programming;tree;depth-first-search
 
 # @lc imports=start
+from operator import length_hint
 from imports import *
 # @lc imports=end
 
@@ -31,12 +32,23 @@ from imports import *
 
 class Solution:
     def bstFromPreorder(self, preorder: List[int]) -> Optional[TreeNode]:
-        n = len(preorder)
-        if n == 0:
+        def dfs(lower, upper):
+            nonlocal idx, length
+            if idx == length:
+                return None
+            if preorder[idx] < lower or preorder[idx] > upper:
+                return None
+            curr = preorder[idx]
+            root = TreeNode(curr)
+            idx += 1
+            root.left = dfs(lower, curr)
+            root.right = dfs(curr, upper)
+            return root
+        if not preorder or len(preorder) == 0:
             return None
-        root = TreeNode(preorder[0])
-        stack = [root]
-        for i in range(1, n):
+        idx = 0
+        length = len(preorder)
+        return dfs(float('-inf'), float('inf'))
             
 
 
