@@ -25,11 +25,20 @@ from imports import *
 
 class Solution:
     def hammingWeight(self, n: int) -> int:
+        """ Soltuion 1 """
         res = 0
         while n != 0:
             # n & n-1 will get rid of last 1 bit in a number
             n = n & (n-1)
             res += 1
+        return res
+
+        """ Solution 2 """
+        res = 0
+        while n > 0:
+            if n & 1 != 0:
+                res += 1
+            n = n >> 1
         return res
         pass
 # @lc code=end

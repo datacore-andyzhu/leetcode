@@ -54,6 +54,22 @@ class Solution:
         for i in range(1,r):
             curr = curr.next
         return curr.val
+    """ Solution 2: reservior sampling """
+
+    def __init__(self, head) -> None:
+        self.head = head
+    
+    def getRandom(self) -> int:
+        chosen = 0
+        scope = 1
+        curr = self.head
+        while curr:
+            if random.random() < 1/scope:
+                chosen = curr.val
+            curr = curr.next
+            scope += 1
+        return chosen
+    
 
 
 # Your Solution object will be instantiated and called as such:
