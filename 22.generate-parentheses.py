@@ -25,6 +25,7 @@ from imports import *
 
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
+        """ Solution 1: backtrack """
         def backtrack(remaining_left, remaining_right, path):
             # at any point creating the pairs, left parenthes should be more than right
             if remaining_left > remaining_right:
@@ -43,6 +44,37 @@ class Solution:
         result = []
         backtrack(n, n, [])
         return result
+
+        """" Solution 2: recursion """
+        def _dfs(left, right, path):
+            # 1. 判断终止条件
+            if left == right == 0:
+                res.append(path)
+                return
+            # 2. 处理当前逻辑
+            # 3. 不断下探
+            if left > 0:
+                _dfs(left-1, right, path + '(')
+            if right > left:
+                _dfs(left, right-1, path + ')')
+        res = []
+        _dfs(n, n, '')
+        return res
+
+        """ Solution 3: BFS """
+        res, queue = [], []
+        queue.append(('', n, n))
+        while queue:
+            path, left, right = queue.pop(0)
+            if left == right == 0:
+                res.append(path)
+                continue
+            if left > 0:
+                queue.append((path+'(', left-1, right))
+            if right > left:
+                queue.append((path+')', left, right-1))
+        return res
+
         pass
 # @lc code=end
 

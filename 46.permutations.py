@@ -58,6 +58,38 @@ class Solution:
         used = [False for _ in range(len(nums))]
         backtrack(nums, used, [])
         return results
+
+        """ Solution 3 """
+        res = []
+
+        def _dfs(cur, rest):
+            if not rest:
+                res.append(cur)
+            for i in range(len(rest)):
+                _dfs(cur+[rest[i]], rest[0:i] + rest[i+1:])
+
+        _dfs([], nums)
+        return res
+
+        """ solution 4 """
+        queue = [[]]
+        level = 0
+        while queue:
+            # popleft node
+            l = len(queue)
+
+            for _ in range(l):
+                cur = queue.pop(0)
+                for j in range(len(nums)):
+                    if nums[j] not in cur:
+                        new = cur + [nums[j]]
+                        queue.append(new)
+            level += 1
+            if level == len(nums):
+                return queue
+        return []
+
+
 # @lc code=end
 
 

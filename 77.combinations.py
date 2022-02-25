@@ -23,6 +23,7 @@ from imports import *
 # @lc code=start
 class Solution:
     def combine(self, n: int, k: int) -> List[List[int]]:
+        """ Solution 1 """
         def backtrack(n, k, start, path):
             if len(path) == k:
                 result.append(path.copy())
@@ -36,6 +37,16 @@ class Solution:
         backtrack(n, k, 1, [])
         
         return result
+
+        """ Solution 2 """
+        def _dfs(cur, index):
+            if len(cur) == k:
+                res.append(cur)
+                return
+            for i in range(index, n+1):
+                _dfs(cur+[i], i+1)
+        res = []
+        _dfs([], 1)
         pass
 # @lc code=end
 
