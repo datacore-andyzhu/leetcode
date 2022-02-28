@@ -45,6 +45,7 @@ class Solution:
                 res = root.val
                 return
             traverse(root.right, k)
+        # main function
         traverse(root, k)
         return res
 
