@@ -23,6 +23,7 @@ from imports import *
 # @lc code=start
 class Solution:
     def findLongestWord(self, s: str, dictionary: List[str]) -> str:
+        """ Solution 1 """
         # first sort the dictionary by len of word and then by alphabet
         dictionary.sort(key=lambda x: (-len(x), x))
         
@@ -39,7 +40,23 @@ class Solution:
             if j == m:
                 return word
         return ''
-                
+        """ SOlution 2: without osrting the dictionary """
+        def isSubsequence(target, source):
+            i = 0
+            j = 0
+            while i < len(target) and j < len(source):
+                if target[i] == source[j]:
+                    i += 1
+                    j += 1
+                else:
+                    j += 1
+            return i == len(target)
+        max_str = ''
+        for word in dictionary:
+            if isSubsequence(word, s):
+                if len(word) > len(max_str) or (len(word) == len(max_str) and word < max_str):
+                    max_str = word
+        return max_str
         pass
 # @lc code=end
 

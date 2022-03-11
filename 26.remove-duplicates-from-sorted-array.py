@@ -23,15 +23,28 @@ from imports import *
 # @lc code=start
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        fast = 0
-        slow = 0
-        while fast < len(nums):
-            if nums[fast] != nums[slow]:
-                slow += 1
+        # fast = 0
+        # slow = 0
+        # while fast < len(nums):
+        #     if nums[fast] != nums[slow]:
+        #         slow += 1
+        #         nums[slow] = nums[fast]
+        #     fast += 1
+        # return slow + 1
+
+        """ Solution 2"""
+        if not nums:
+            return 0
+
+        n = len(nums)
+        fast = slow = 1
+        while fast < n:
+            if nums[fast] != nums[fast - 1]:
                 nums[slow] = nums[fast]
+                slow += 1
             fast += 1
-        return slow + 1
-        
+
+        return slow
 # @lc code=end
 
 # @lc main=start
