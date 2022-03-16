@@ -10,6 +10,7 @@ from typing import *
 
 class Solution:
     def treeToDoublyList(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        """ Solution 1 """
         first, last = None, None
 
         def traverse(node):
@@ -29,6 +30,27 @@ class Solution:
         if not root:
             return None
         traverse(root)
+        last.right = first
+        first.left = last
+        return first
+
+        """ SOlution 2 """
+        if not root:
+            return None
+        first, last = None, None
+        stack = []
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            if not first:
+                first = root
+            if last:
+                last.right = root
+                root.left = last
+            last = root
+            root = root.right
         last.right = first
         first.left = last
         return first

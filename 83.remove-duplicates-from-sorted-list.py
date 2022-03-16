@@ -41,16 +41,21 @@ class Solution:
 
         # return head
         """Using two pointers"""
-        slow = head
-        fast = head
-        while fast:
-            if fast.val != slow.val:
-                slow.next = fast
-                slow = slow.next
-            fast = fast.next
-        if slow:
-            slow.next = None
-        return head
+        # slow = head
+        # fast = head
+        # while fast:
+        #     if fast.val != slow.val:
+        #         slow.next = fast
+        #         slow = slow.next
+        #     fast = fast.next
+        # if slow:
+        #     slow.next = None
+        # return head
+        """ Solution 3 """
+        if not head or not head.next:
+            return head
+        head.next = self.deleteDuplicates(head.next)
+        return head.next if head.val==head.next.val else head
 
 # @lc code=end
 

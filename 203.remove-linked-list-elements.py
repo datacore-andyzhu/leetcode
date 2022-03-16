@@ -7,6 +7,7 @@
 # @lc tags=linked-list
 
 # @lc imports=start
+from multiprocessing import dummy
 from imports import *
 # @lc imports=end
 
@@ -30,22 +31,39 @@ from imports import *
 
 class Solution:
     def removeElements(self, head: Optional[ListNode], val: int) -> Optional[ListNode]:
-        if head is None:
+        # """ Solution 1 """
+        # if head is None:
+        #     return None
+        # current = head
+        # previous = head
+        # while current:
+        #     if head.val == val:
+        #         head = current.next
+        #         current = head
+        #         previous = head
+        #         continue
+        #     if current.val == val and current != previous:
+        #         previous.next = current.next
+        #     else:
+        #         previous = current
+        #     current = current.next
+        # return head
+        """ Solution 2 """
+        # if not head:
+        #     return None
+        # dummy = ListNode(val=0, next=head)
+        # curr = dummy
+        # while curr.next:
+        #     if curr.next.val == val:
+        #         curr.next = curr.next.next
+        #     else:
+        #         curr = curr.next
+        # return dummy.next
+        """ Solution 3 """
+        if not head:
             return None
-        current = head
-        previous = head
-        while current:
-            if head.val == val:
-                head = current.next
-                current = head
-                previous = head
-                continue
-            if current.val == val and current != previous:
-                previous.next = current.next
-            else:
-                previous = current
-            current = current.next
-        return head
+        head.next = self.removeElements(head.next, val)
+        return head.next if head.val == val else head
 
 # @lc code=end
 

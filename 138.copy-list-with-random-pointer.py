@@ -7,6 +7,7 @@
 # @lc tags=hash-table;linked-list
 
 # @lc imports=start
+from email import header
 from imports import *
 # @lc imports=end
 
@@ -32,33 +33,54 @@ class Node:
         self.random = random
 """
 
-class Solution:
-    def __init__(self) -> None:
-        self.visited = {}
 
-    def copyNode(self, node):
-        if node:
-            if node in self.visited:
-                return self.visited[node]
-            else:
-                self.visited[node] = Node(node.val, None, None)
-                return self.visited[node]
+class Solution:
+    """ Solution 1 """
+    # def __init__(self) -> None:
+    #     self.visited = {}
+
+    # def copyNode(self, node):
+    #     if node:
+    #         if node in self.visited:
+    #             return self.visited[node]
+    #         else:
+    #             self.visited[node] = Node(node.val, None, None)
+    #             return self.visited[node]
+
+    # def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+    #     if head is None:
+    #         return None
+    #     curr = head
+    #     newNode = Node(curr.val)
+    #     self.visited[curr] = newNode
+
+    #     while curr is not None:
+    #         newNode.next = self.copyNode(curr.next)
+    #         newNode.random = self.copyNode(curr.random)
+
+    #         curr = curr.next
+    #         newNode = newNode.next
+    #     return self.visited[head]
+    """ Solution 2 """
 
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        if head is None:
-            return None
+        if not head:
+            return head
+        _map = defaultdict(Node)
         curr = head
-        newNode = Node(curr.val)
-        self.visited[curr] = newNode
-
-        while curr is not None:
-            newNode.next = self.copyNode(curr.next)
-            newNode.random = self.copyNode(curr.random)
-
+        while curr:
+            _map[curr] = Node(curr.val)
             curr = curr.next
-            newNode = newNode.next
-        return self.visited[head]
-        pass
+        curr = head
+        while curr:
+            if curr.next:
+                _map[curr].next = _map[curr.next]
+            if curr.random:
+                _map[curr].random = _map[curr.random]
+            curr = curr.next
+        return _map[head]
+
+
 # @lc code=end
 
 

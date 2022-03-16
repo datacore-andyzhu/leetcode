@@ -83,6 +83,73 @@ class Solution:
         newhead = reverse(a, b)
         a.next = self.reverseKGroup(b, k)
         return newhead
+
+        """ Solution 2"""
+        # def countLength(curr):
+        #     count = 0
+        #     while curr:
+        #         curr = curr.next
+        #         count += 1
+        #     return count
+        # def reverseBetween(head, m, n):
+        #     dummyhead = ListNode(val=None, next=head)
+        #     prev = dummyhead
+        #     curr = head
+        #     i = 1
+        #     while i < m:
+        #         prev, curr = curr, curr.next
+        #         i += 1
+        #     anchor = prev
+        #     while i <= n:
+        #         curr.next, prev, curr = prev, curr, curr.next
+        #         i += 1
+        #     anchor.next.next = curr
+        #     anchor.next = prev
+        #     return dummyhead.next
+        # N = countLength(head)
+        # i = 1
+        # while i + k <= N+1:
+        #     head = reverseBetween(head, i, i+k-1);
+        #     i += k
+        # return head
+
+        """ Solution 3 """
+        # def reverse(head, prev, count):
+        #     while count > 0:
+        #         nxt = head.next
+        #         head.next = prev
+        #         prev = head
+        #         head = nxt
+        #         count -= 1
+        #     return prev
+        # node = head
+        # count = 0
+        # while count < k:
+        #     if node is None:
+        #         return head
+        #     node = node.next
+        #     count += 1
+        # prev = self.reverseKGroup(node, k)
+        # return reverse(head, prev, k)
+
+        """ Solution 4 """
+        def reverse(head, k):
+            prev = None
+            curr = head
+            while k > 0:
+                curr.next, prev, curr = prev, curr, curr.next
+                k -= 1
+            return prev
+        node = head
+        count = 0
+        while count < k:
+            if node is None:
+                return head
+            node = node.next
+            count += 1
+        newhead = reverse(head, k)
+        head.next = self.reverseKGroup(node, k)
+        return newhead
 # @lc code=end
 
 

@@ -25,29 +25,51 @@ from imports import *
 
 class Solution:
     def minRemoveToMakeValid(self, s: str) -> str:
-        stack = []
+        # stack = []
 
-        # for i in range(len(s)): # we do not use range(lens(s)) here because
-        # the s has changed when we remove the (, but len(s) inside the
-        # range function only compute the len of s once, while
-        # we need to recompute the len of s every loop
-        i = 0
-        while i < len(s):
-            if not stack and s[i] == ')':
-                s = s[:i] + s[i+1:]
-                continue
-            if s[i] == '(':
-                stack.append(['(', i])
+        # # for i in range(len(s)): # we do not use range(lens(s)) here because
+        # # the s has changed when we remove the (, but len(s) inside the
+        # # range function only compute the len of s once, while
+        # # we need to recompute the len of s every loop
+        # i = 0
+        # while i < len(s):
+        #     if not stack and s[i] == ')':
+        #         s = s[:i] + s[i+1:]
+        #         continue
+        #     if s[i] == '(':
+        #         stack.append(['(', i])
 
-            if s[i] == ')':
-                if stack[-1][0] == '(':
-                    stack.pop()
-            i += 1
-        while stack:
-            idx = stack[-1][1]
-            s = s[:idx] + s[idx+1:]
-            stack.pop()
-        return s
+        #     if s[i] == ')':
+        #         if stack[-1][0] == '(':
+        #             stack.pop()
+        #     i += 1
+        # while stack:
+        #     idx = stack[-1][1]
+        #     s = s[:idx] + s[idx+1:]
+        #     stack.pop()
+        # return s
+        """ Solution 2 """
+        first_pass = []
+        balance = 0
+        open_seen = 0
+        for ch in s:
+            if ch == "(":
+                open_seen += 1
+                balance += 1
+            if ch == ")":
+                if balance == 0:
+                    continue
+                balance -= 1
+            first_pass.append(ch)
+        result = []
+        open_keep = open_seen - balance
+        for ch in first_pass:
+            if ch == "(":
+                open_keep -= 1
+                if open_keep < 0:
+                    continue
+            result.append(ch)
+        return ''.join(result)
 # @lc code=end
 
 

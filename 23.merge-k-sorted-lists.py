@@ -56,28 +56,51 @@ class Solution:
         #         heapq.heappush(heap, (lists[b].val, b))
         # return head.next
         """ Solution 2: Merge """
-        def merge2Lists(list1, list2):
-            head = curr = ListNode(0)
-            while list1 and list2:
-                if list1.val <= list2.val:
-                    curr.next = list1
-                    list1 = list1.next
-                else:
-                    curr.next = list2
-                    list2 = list2.next
-                curr = curr.next
-            if not list1:
-                curr.next = list2
+        # def merge2Lists(list1, list2):
+        #     head = curr = ListNode(0)
+        #     while list1 and list2:
+        #         if list1.val <= list2.val:
+        #             curr.next = list1
+        #             list1 = list1.next
+        #         else:
+        #             curr.next = list2
+        #             list2 = list2.next
+        #         curr = curr.next
+        #     if not list1:
+        #         curr.next = list2
+        #     else:
+        #         curr.next = list1
+        #     return head.next
+        # amount = len(lists)
+        # interval = 1
+        # while interval < amount:
+        #     for i in range(0, amount-interval, interval*2):
+        #         lists[i] = merge2Lists(lists[i], lists[i+interval])
+        #     interval *= 2
+        # return lists[0] if amount > 0 else None
+        """ SOlution 3: merge every 2 """
+        def merge(l1, l2):
+            if not l2:
+                return l1
+            if not l1:
+                return l2
+            if l1.val < l2.val:
+                l1.next = merge(l1.next, l2)
+                return l1
             else:
-                curr.next = list1
-            return head.next
-        amount = len(lists)
-        interval = 1
-        while interval < amount:
-            for i in range(0, amount-interval, interval*2):
-                lists[i] = merge2Lists(lists[i], lists[i+interval])
-            interval *= 2
-        return lists[0] if amount > 0 else None
+                l2.next = merge(l1, l2.next)
+                return l2
+
+        def partition(lists, start, end):
+            if start == end:
+                return lists[start]
+            if start < end:
+                mid = start + (end-start) // 2
+                l1 = partition(lists, start, mid)
+                l2 = partition(lists, mid+1, end)
+                return merge(l1, l2)
+            return None
+        return partition(lists, 0, len(lists)-1)
                 
 # @lc code=end
 # @lc main=start
