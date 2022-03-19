@@ -24,6 +24,7 @@ from imports import *
 # @lc code=start
 class Solution:
     def removeDuplicateLetters(self, s: str) -> str:
+        """ Solution 1 """
         letter_counter = collections.Counter(s)
         monotone_stack = []
         for char in s:
@@ -34,6 +35,18 @@ class Solution:
             letter_counter[char] -= 1
         
         return ''.join(monotone_stack)
+        """" Solution 2 """
+        stack = []
+        seen = set()
+        last_position = {c: i for i, c in enumerate(s)}
+
+        for idx, ch in enumerate(s):
+            if ch not in seen:
+                while stack and ch < stack[-1] and idx < last_position[stack[-1]]:
+                    seen.discard(stack.pop())
+                stack.append(ch)
+                seen.add(ch)
+        return ''.join(stack)
 # @lc code=end
 
 # @lc main=start
