@@ -74,6 +74,18 @@ class Solution:
             else:
                 high = mid - 1
         return low
+
+        """ Solution 6 """
+        def swap(nums, i, j):
+            nums[i], nums[j] = nums[j], nums[i]
+
+        for i in range(len(nums)):
+            while nums[i] != i+1:
+                if nums[i] == nums[nums[i]-1]:
+                    return nums[i]
+                swap(nums, i, nums[i]-1)
+
+        return -1
         pass
 # @lc code=end
 
